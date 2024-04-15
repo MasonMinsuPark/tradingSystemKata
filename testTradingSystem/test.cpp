@@ -78,5 +78,17 @@ TEST_F(testTradingSystem, sellNiceTimingTest) {
 		.WillOnce(Return(80000));
 	EXPECT_CALL(mockTradingBrocker, sell("samsung", 80000, 1));
 
-	app.sellNiceTiming("samsung", 1, 80000);
+	app.sellNiceTiming("samsung", 80000, 1);
+}
+
+TEST_F(testTradingSystem, sellNiceTimingTest2) {
+	MockTradingBrocker mockTradingBrocker;
+	app.selectStockBlocker(&mockTradingBrocker);
+	EXPECT_CALL(mockTradingBrocker, getPrice("samsung"))
+		.WillOnce(Return(100000))
+		.WillOnce(Return(90000))
+		.WillOnce(Return(90000));
+	EXPECT_CALL(mockTradingBrocker, sell("samsung", 80000, 1)).Times(0);
+
+	app.sellNiceTiming("samsung", 80000, 1);
 }

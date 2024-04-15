@@ -21,7 +21,7 @@ public:
 		tradingBrocker->login(ID, password);
 	}
 	void buy(string stockCode, int price, int count) {
-
+		tradingBrocker->buy(stockCode, price, count);
 	}
 	void sell(string stockCode, int price, int count) {
 		tradingBrocker->sell(stockCode, price, count);

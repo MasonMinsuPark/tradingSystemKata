@@ -34,8 +34,10 @@ TEST_F(testTradingSystem, loginTest) {
 TEST_F(testTradingSystem, buyTest) {
 	MockTradingBrocker mockTradingBrocker;
 	app.selectStockBlocker(&mockTradingBrocker);
-	EXPECT_CALL(mockTradingBrocker, buy("samsung", 1, 100000));
-	app.buy("samsung", 1, 100000);
+	EXPECT_CALL(mockTradingBrocker, buy(_, _, _)).Times(3);
+	app.buy("samsung", 100000, 1);
+	app.buy("sam", 1234, 2);
+	app.buy("sung", 5678, 3);
 }
 
 TEST_F(testTradingSystem, sellTest) {

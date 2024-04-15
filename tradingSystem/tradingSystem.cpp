@@ -43,9 +43,7 @@ public:
 		cur_price = getPrice(stockCode);
 		if (prev_price < cur_price) up_count++;
 
-		if (up_count >= 3) {
-			tradingBrocker->buy(stockCode, price, count);
-		}
+		if (up_count >= 3) tradingBrocker->buy(stockCode, price, count);
 	}
 	void sellNiceTiming(string stockCode, int price, int count) {
 

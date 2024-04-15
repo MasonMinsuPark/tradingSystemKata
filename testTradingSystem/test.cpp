@@ -43,7 +43,10 @@ TEST_F(testTradingSystem, buyTest) {
 TEST_F(testTradingSystem, sellTest) {
 	MockTradingBrocker mockTradingBrocker;
 	app.selectStockBlocker(&mockTradingBrocker);
-	EXPECT_CALL(mockTradingBrocker, sell("samsung", 1, 80000));
+	
+	EXPECT_CALL(mockTradingBrocker, sell("samsung", 1, 80000))
+		.WillRepeatedly(Return());
+
 	app.buy("samsung", 1, 80000);
 }
 

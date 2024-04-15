@@ -18,16 +18,16 @@ public:
 		tradingBrocker = tradingBrockerPtr;
 	}
 	void login(string ID, string password) {
-
+		tradingBrocker->login(ID, password);
 	}
 	void buy(string stockCode, int price, int count) {
 		tradingBrocker->buy(stockCode, price, count);
 	}
 	void sell(string stockCode, int price, int count) {
-
+		tradingBrocker->sell(stockCode, price, count);
 	}
 	void getPrice(string stockCode) {
-
+		tradingBrocker->getPrice(stockCode);
 	}
 	void buyNiceTiming() {
 

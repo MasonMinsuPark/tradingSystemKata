@@ -30,7 +30,20 @@ public:
 		return tradingBrocker->getPrice(stockCode);
 	}
 	void buyNiceTiming(string stockCode, int price, int count) {
+		int prev_price = 0;
+		int cur_price = 0;
+		int up_count = 0;
 
+		cur_price = getPrice(stockCode);
+		prev_price = cur_price;  up_count++;
+
+		cur_price = getPrice(stockCode);
+		if (prev_price < cur_price) up_count++;
+
+		cur_price = getPrice(stockCode);
+		if (prev_price < cur_price) up_count++;
+
+		if (up_count >= 3) tradingBrocker->buy(stockCode, price, count);
 	}
 	void sellNiceTiming(string stockCode, int price, int count) {
 

@@ -7,9 +7,9 @@ public:
 	virtual void login(string ID, string password) = 0;
 	virtual void buy(string stockCode, int price, int count) = 0;
 	virtual void sell(string stockCode, int price, int count) = 0;
-	virtual void getPrice(string stockCode) = 0;
-	virtual void buyNiceTiming() = 0;
-	virtual void sellNiceTiming() = 0;
+	virtual int getPrice(string stockCode) = 0;
+	virtual void buyNiceTiming(string stockCode, int price, int count) = 0;
+	virtual void sellNiceTiming(string stockCode, int price, int count) = 0;
 };
 
 class App {
@@ -26,13 +26,13 @@ public:
 	void sell(string stockCode, int price, int count) {
 		tradingBrocker->sell(stockCode, price, count);
 	}
-	void getPrice(string stockCode) {
-		tradingBrocker->getPrice(stockCode);
+	int getPrice(string stockCode) {
+		return tradingBrocker->getPrice(stockCode);
 	}
-	void buyNiceTiming() {
+	void buyNiceTiming(string stockCode, int price, int count) {
 
 	}
-	void sellNiceTiming() {
+	void sellNiceTiming(string stockCode, int price, int count) {
 
 	}
 private:

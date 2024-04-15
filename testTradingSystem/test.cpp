@@ -9,9 +9,9 @@ public:
 	MOCK_METHOD(void, login, (string ID, string password), (override));
 	MOCK_METHOD(void, buy, (string stockCode, int price, int count), (override));
 	MOCK_METHOD(void, sell, (string stockCode, int price, int count), (override));
-	MOCK_METHOD(void, getPrice, (string stockCode), (override));
-	MOCK_METHOD(void, buyNiceTiming, (), (override));
-	MOCK_METHOD(void, sellNiceTiming, (), (override));
+	MOCK_METHOD(int, getPrice, (string stockCode), (override));
+	MOCK_METHOD(void, buyNiceTiming, (string stockCode, int price, int count), (override));
+	MOCK_METHOD(void, sellNiceTiming, (string stockCode, int price, int count), (override));
 };
 
 class testTradingSystem : public Test {
@@ -41,7 +41,7 @@ TEST_F(testTradingSystem, buyTest) {
 TEST_F(testTradingSystem, sellTest) {
 	MockTradingBrocker mockTradingBrocker;
 	app.selectStockBlocker(&mockTradingBrocker);
-	
+
 	EXPECT_CALL(mockTradingBrocker, sell("samsung", 1, 80000))
 		.WillRepeatedly(Return());
 
@@ -53,4 +53,28 @@ TEST_F(testTradingSystem, getPriceTest) {
 	app.selectStockBlocker(&mockTradingBrocker);
 	EXPECT_CALL(mockTradingBrocker, getPrice("samsung"));
 	app.getPrice("samsung");
+}
+
+TEST_F(testTradingSystem, buyNiceTimingTest) {
+	MockTradingBrocker mockTradingBrocker;
+	app.selectStockBlocker(&mockTradingBrocker);
+	EXPECT_CALL(mockTradingBrocker, getPrice("samsung"))
+		.WillOnce(Return(80000))
+		.WillOnce(Return(90000))
+		.WillOnce(Return(100000));
+	EXPECT_CALL(mockTradingBrocker, buy("samsung", 100000, 1));
+
+	app.buyNiceTiming("samsung", 100000, 1);
+}
+
+TEST_F(testTradingSystem, sellNiceTimingTest) {
+	MockTradingBrocker mockTradingBrocker;
+	app.selectStockBlocker(&mockTradingBrocker);
+	EXPECT_CALL(mockTradingBrocker, getPrice("samsung"))
+		.WillOnce(Return(100000))
+		.WillOnce(Return(90000))
+		.WillOnce(Return(80000));
+	EXPECT_CALL(mockTradingBrocker, sell("samsung", 80000, 1));
+
+	app.sellNiceTiming("samsung", 1, 80000);
 }

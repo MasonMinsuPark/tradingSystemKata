@@ -27,7 +27,7 @@ public:
 		tradingBrocker->sell(stockCode, price, count);
 	}
 	void getPrice(string stockCode) {
-
+		tradingBrocker->getPrice(stockCode);
 	}
 	void buyNiceTiming() {
 

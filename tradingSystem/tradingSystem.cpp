@@ -15,11 +15,6 @@ public:
 
 class App {
 public:
-	App() : up_count_(0) 
-	{
-		tradingBrocker = nullptr;
-	}
-
 	void selectStockBlocker(TradingBrocker* tradingBrockerPtr) {
 		tradingBrocker = tradingBrockerPtr;
 	}
@@ -38,18 +33,18 @@ public:
 	void buyNiceTiming(string stockCode, int price, int count) {
 		int prev_price = 0;
 		int cur_price = 0;
-		up_count_ = 0;
+		int up_count = 0;
 
 		cur_price = getPrice(stockCode);
-		prev_price = cur_price;  up_count_++;
+		prev_price = cur_price;  up_count++;
 
 		cur_price = getPrice(stockCode);
-		if (prev_price < cur_price) up_count_++;
+		if (prev_price < cur_price) up_count++;
 
 		cur_price = getPrice(stockCode);
-		if (prev_price < cur_price) up_count_++;
+		if (prev_price < cur_price) up_count++;
 
-		if (up_count_ >= 3) {
+		if (up_count >= 3) {
 			tradingBrocker->buy(stockCode, price, count);
 		}
 	}
@@ -58,5 +53,4 @@ public:
 	}
 private:
 	TradingBrocker* tradingBrocker;
-	int up_count_;
 };

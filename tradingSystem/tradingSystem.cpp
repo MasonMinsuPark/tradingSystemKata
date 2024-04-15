@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 using namespace std; 
 
@@ -14,6 +15,11 @@ public:
 
 class App {
 public:
+	App() : up_count_(0) 
+	{
+		tradingBrocker = nullptr;
+	}
+
 	void selectStockBlocker(TradingBrocker* tradingBrockerPtr) {
 		tradingBrocker = tradingBrockerPtr;
 	}
@@ -30,11 +36,27 @@ public:
 		return tradingBrocker->getPrice(stockCode);
 	}
 	void buyNiceTiming(string stockCode, int price, int count) {
+		int prev_price = 0;
+		int cur_price = 0;
+		up_count_ = 0;
 
+		cur_price = getPrice(stockCode);
+		prev_price = cur_price;  up_count_++;
+
+		cur_price = getPrice(stockCode);
+		if (prev_price < cur_price) up_count_++;
+
+		cur_price = getPrice(stockCode);
+		if (prev_price < cur_price) up_count_++;
+
+		if (up_count_ >= 3) {
+			tradingBrocker->buy(stockCode, price, count);
+		}
 	}
 	void sellNiceTiming(string stockCode, int price, int count) {
 
 	}
 private:
 	TradingBrocker* tradingBrocker;
+	int up_count_;
 };

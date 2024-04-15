@@ -1,5 +1,5 @@
 #include <string>
-
+#define MAX_PRICE	0x7FFFFFFF
 using namespace std; 
 
 class TradingBrocker {
@@ -33,7 +33,18 @@ public:
 
 	}
 	void sellNiceTiming(string stockCode, int price, int count) {
-
+		int PrevPrice = MAX_PRICE;
+		int CurrentPrice;
+		for (int i = 0; i < 3; i++)
+		{
+			CurrentPrice = getPrice(stockCode);
+			if (PrevPrice <= CurrentPrice)
+			{
+				return;
+			}
+			PrevPrice = CurrentPrice;
+		}
+		sell(stockCode, price, count);
 	}
 private:
 	TradingBrocker* tradingBrocker;

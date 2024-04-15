@@ -18,7 +18,7 @@ public:
 		tradingBrocker = tradingBrockerPtr;
 	}
 	void login(string ID, string password) {
-
+		tradingBrocker->login(ID, password);
 	}
 	void buy(string stockCode, int price, int count) {
 
